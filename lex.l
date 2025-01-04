@@ -21,29 +21,12 @@ void	{ yylval.tree = terminator("VOID", yylineno); return VOID;}
 main    { yylval.tree = terminator("MAIN", yylineno); return MAIN;}
 return  { yylval.tree = terminator("RETURN", yylineno); return RET;}
 
-const   { yylval.tree = terminator("CONST", yylineno); return CONST;}
-static  { yylval.tree = terminator("STATIC", yylineno); return STATIC;}
-auto    { yylval.tree = terminator("AUTO", yylineno); return AUTO;}
-
 if      { yylval.tree = terminator("IF", yylineno); return IF;}
 else    { yylval.tree = terminator("ELSE", yylineno); return ELSE;}
 for     { yylval.tree = terminator("FOR", yylineno); return FOR;}
 while   { yylval.tree = terminator("WHILE", yylineno); return WHILE;}
-do      { yylval.tree = terminator("DO", yylineno); return DO;}
-break   { yylval.tree = terminator("BREAK", yylineno); return BREAK;}
-continue	{ yylval.tree = terminator("CONTINUE", yylineno); return CONTINUE;}
-switch  { yylval.tree = terminator("SWITCH", yylineno); return SWITCH;}
-case    { yylval.tree = terminator("CASE", yylineno); return CASE;}
-default { yylval.tree = terminator("DEFAULT", yylineno); return DEFAULT;}
-
-sizeof  	{ yylval.tree = terminator("SIZEOF", yylineno); return SIZEOF;}
-typedef 	{ yylval.tree = terminator("TYPEDEF", yylineno); return TYPEDEF;}
-volatile    { yylval.tree = terminator("VOL", yylineno); return VOLATILE;}
-goto    	{ yylval.tree = terminator("GOTO", yylineno); return GOTO;}
 
 int			{ yylval.tree = terminator("INT", yylineno); return INT;}
-input_int   { yylval.tree = terminator("INPUT", yylineno); return INPUT;}
-output_int  { yylval.tree = terminator("OUTPUT", yylineno);return OUTPUT;}
 
 {whitespace}    {}
 {int8}  	{ yylval.tree = terminator("INT8", yylineno); return INT8;}
@@ -100,7 +83,7 @@ output_int  { yylval.tree = terminator("OUTPUT", yylineno);return OUTPUT;}
 void comment(void)
 {
 	char c, prev = 0;
-  
+
 	while ((c = input()) != 0)      /* (EOF maps to 0) */
 	{
 		if (c == '/' && prev == '*')
@@ -110,7 +93,7 @@ void comment(void)
 	/* perror("unterminated comment"); */
     printf("Error: unterminated comment\n");
 }
-int yywrap() 
-{ 
-	return 1; 
+int yywrap()
+{
+	return 1;
 }
