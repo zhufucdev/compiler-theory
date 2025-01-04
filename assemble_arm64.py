@@ -4,9 +4,9 @@ next_offset = 0
 
 def parse_intermediate_code():
     """
-    Parses the intermediate code from the 'Innercode' file and converts it to a list of tuples.
+    Parses the intermediate code from the 'innercode' file and converts it to a list of tuples.
     """
-    with open('Innercode', 'r') as file:
+    with open('innercode', 'r') as file:
         stmts = [line.strip() for line in file.readlines()]
 
     four = []

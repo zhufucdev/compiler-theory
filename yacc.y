@@ -11,7 +11,7 @@
     extern FILE* yyout;
     FILE *out,*outInner;
 
-    HashMap* hashMap = NULL;    // 符号表
+    HashMap* hashMap = NULL;
     int scope = 0;
     struct Declator* declator;
     int type;
@@ -19,7 +19,6 @@
 
     Tree* root;
     Node *head;
-    //中间代码生成
     int line_count=1;
 %}
 %union{
@@ -401,10 +400,10 @@ void yyerror(const char* s){
 }
 
 int main(int argc, char* argv[]){
-    const char* outFile="Lexical";
-    const char* outFile2="Grammatical";
-    const char* outFile3="Innercode";
-    extern FILE* yyin, *yyout;	//yyin和yyout都是FILE*类型
+    const char* outFile="lexical";
+    const char* outFile2="grammatical";
+    const char* outFile3="innercode";
+    extern FILE* yyin, *yyout;
     type = 0;
     hashMap = createHashMap(2);
 	yyin = fopen(argv[1], "r");
@@ -412,9 +411,8 @@ int main(int argc, char* argv[]){
     out = fopen(outFile2,"w");
     outInner = fopen(outFile3,"w");
     int i = 0;
-    fprintf(yyout, "%-15s\t%-15s\t%s\n", "单词", "词素", "属性");
+    fprintf(yyout, "%-15s\t%-15s\t%s\n", "Token", "Literal", "Properties");
 	if(!yyparse()){
-        //正常解读文件
         printf("read successfully\n");
         printTree(root);
     }

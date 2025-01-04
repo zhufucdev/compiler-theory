@@ -1,6 +1,6 @@
 def assemble():
     four = []
-    with open('Innercode', 'r') as file:
+    with open('innercode', 'r') as file:
         stmts = list(line.replace('\n', '') for line in file.readlines())
 
     for stmt in stmts:
