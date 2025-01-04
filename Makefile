@@ -10,6 +10,7 @@ lex.yy.c: lex.l
 	$(LEX) -o out/lex.yy.c lex.l
 
 yacc.tab.c yacc.tab.h: yacc.y hashMap.h tree.h
+	mkdir -p out
 	$(YACC) -d yacc.y -o out/yacc.tab.c
 
 Compiler: yacc.tab.c yacc.tab.h lex.yy.c hashMap.h tree.h tree.c
