@@ -147,10 +147,16 @@ Tree* binaryOpr(char* name, Tree* t1, Tree* t2, Tree* t3){
 
 //赋值语句创建树
 Tree* assignOpr(char* name, Tree* t1, Tree* t2, Tree* t3){
-    Tree* t =op(name, 2, t2, t1, t3);
+    Tree* t = op(name, 2, t2, t1, t3);
     t->inner = t1->inner;
-    t->code = mergeCode(8, t3->code,
-        "#", t1->inner, " " ,t->content, " ", t3->inner, "\n");
+    if (t1->declator && t1->declator->type == ARRAY) {
+        char *td = toString(inner_count++);
+        t->code = mergeCode(14, "#t", td, " = 4 * ", t1->declator->length->content, "\n",
+            "#", t1->inner, "[t", td, "] " ,t->content, " ", t3->inner, "\n");
+    } else {
+        t->code = mergeCode(8, t3->code,
+            "#", t1->inner, " " , t->content, " ", t3->inner, "\n");
+    }
     line_count++;
     return t;
 }
@@ -159,7 +165,7 @@ Tree* assignOpr(char* name, Tree* t1, Tree* t2, Tree* t3){
 Tree* unaryOpr(char* name, Tree* t1, Tree* t2){
     Tree* t = op(name, 1, t1, t2);
     //Node *node = getNodeBySingleVar(t->content,t2->inner,inner_count++);
-    t->inner=mergeCode(2,"t",toString(inner_count++));
+    t->inner=mergeCode(2, "t", toString(inner_count++));
     // if(node->op){
         t->code = mergeCode(8, t2->code, "#", t->inner, " = ",t->content, " ", t2->inner, "\n");
         line_count++;
@@ -307,4 +313,37 @@ Tree* initTree(int num){
     tree->next = NULL;
     tree->declator = NULL;
     return tree;
+}
+
+
+char *getAllocations(Array *head) {
+    char *buf = (char *)malloc(1000);
+    while (head->next) {
+        head = head->next;
+        sprintf(buf, buf[0] ? "%s\n%s[%d]" : "%s%s[%d]", buf, head->name, head->length);
+    }
+
+    return buf;
+}
+
+Array *emptyArray() {
+    Array *r = (Array *)malloc(sizeof(Array));
+    r->next = NULL;
+    r->length = -1;
+    r->name = NULL;
+    return r;
+}
+
+Array *addArray(Array *head, Tree* expressionTree) {
+    for (int i = 0; i < expressionTree->num; ++i) {
+        Tree *maybeId = expressionTree->leaves[i];
+        printf("Added %s\n", maybeId->content);
+        if (!strcmp(maybeId->name, "ID") && maybeId->declator && maybeId->declator->type == ARRAY) {
+            head->next = emptyArray();
+            head = head->next;
+            head->name = maybeId->content;
+            head->length = atoi(maybeId->declator->length->content) * 4;
+        }
+    }
+    return head;
 }

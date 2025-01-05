@@ -12,6 +12,9 @@
     FILE *out,*outInner;
 
     HashMap* hashMap = NULL;
+    Array *globalArray = NULL;
+    Array *lastGlobalArray = NULL;
+
     int scope = 0;
     struct Declator* declator;
     int type;
@@ -57,7 +60,7 @@ project:
             while(seek){
                 seek = swap(root->code,"#",lineToString(line_count++));
             }
-            fprintf(outInner,"%s",root->code);
+            fprintf(outInner, "%s\n%s", getAllocations(globalArray), root->code);
         }
     }
 ;
@@ -113,7 +116,6 @@ postfix_expression
     | postfix_expression '[' operate_expression ']'
     {
         $$ = addDeclator("Array", $1, $3);
-        //$$->code ti = $1-> inner * $3->inner + $3->inner
     }
     | postfix_expression INC
     {
@@ -278,6 +280,9 @@ declare_expression
         if($2){
             putTree(hashMap, $2);
             preType = type = 0;
+
+
+            lastGlobalArray = addArray(lastGlobalArray, $2);
         }
     }
 ;
@@ -406,6 +411,8 @@ int main(int argc, char* argv[]){
     extern FILE* yyin, *yyout;
     type = 0;
     hashMap = createHashMap(2);
+    globalArray = emptyArray();
+    lastGlobalArray = globalArray;
 	yyin = fopen(argv[1], "r");
     yyout = fopen(outFile, "w");
     out = fopen(outFile2,"w");

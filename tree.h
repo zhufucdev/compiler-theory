@@ -15,6 +15,11 @@ typedef struct Tree{
     struct Declator* declator;
 }Tree;
 
+typedef struct Array{
+    char *name;
+    int length;
+    struct Array *next;
+} Array;
 
 Tree* initTree(int num);
 Tree* createTree(char* name, int number, ...);
@@ -32,8 +37,14 @@ Tree* forOpr(char* name,int head1, int head2, int nextline, Tree* op1, Tree* op2
 Tree* retNull(char* name,Tree* ret);
 Tree* retOpr(char* name,Tree* ret,Tree* op);
 Tree* unaryFunc(char* name,Tree* func, Tree* op);
+
+char *getAllocations(Array *head);
+
 // 添加修饰符
 Tree* addDeclator(char* name, Tree* t1, Tree* t2);
+
+Array *emptyArray();
+Array *addArray(Array *head, Tree* expressionTree);
 
 // name, num_args, init, cond, code
 Tree* loop(char* name, int number, ...);

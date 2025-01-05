@@ -27,4 +27,5 @@ char* toString(int number);
 //替换字符串
 int swap(char *text, char *a, char *b);
 
+
 #endif
