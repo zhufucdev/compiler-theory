@@ -153,11 +153,12 @@ Tree* assignOpr(char* name, Tree* t1, Tree* t2, Tree* t3){
         char *td = toString(inner_count++);
         t->code = mergeCode(14, "#t", td, " = 4 * ", t1->declator->length->content, "\n",
             "#", t1->inner, "[t", td, "] " ,t->content, " ", t3->inner, "\n");
+        line_count+=2;
     } else {
         t->code = mergeCode(8, t3->code,
             "#", t1->inner, " " , t->content, " ", t3->inner, "\n");
+        line_count++;
     }
-    line_count++;
     return t;
 }
 
@@ -213,7 +214,7 @@ Tree* forOpr(char* name,int head1, int head2, int nextline, Tree* op1, Tree* op2
     t->code = mergeCode(18,op1->code,
         op2->code,
         "#","if ", op2->inner, " goto ",toString(head2+2),"\n",
-        "#","goto ", toString(nextline+2),"\n",
+        "#","goto ", toString(nextline+1),"\n",
         stmt->code,
         op3->code,
         "#","goto ", toString(head1),"\n"
