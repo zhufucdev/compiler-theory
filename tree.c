@@ -213,7 +213,7 @@ Tree* forOpr(char* name,int head1, int head2, int nextline, Tree* op1, Tree* op2
     t->code = mergeCode(18,op1->code,
         op2->code,
         "#","if ", op2->inner, " goto ",toString(head2+2),"\n",
-        "#","goto ", toString(nextline+1),"\n",
+        "#","goto ", toString(nextline+2),"\n",
         stmt->code,
         op3->code,
         "#","goto ", toString(head1),"\n"
@@ -337,7 +337,6 @@ Array *emptyArray() {
 Array *addArray(Array *head, Tree* expressionTree) {
     for (int i = 0; i < expressionTree->num; ++i) {
         Tree *maybeId = expressionTree->leaves[i];
-        printf("Added %s\n", maybeId->content);
         if (!strcmp(maybeId->name, "ID") && maybeId->declator && maybeId->declator->type == ARRAY) {
             head->next = emptyArray();
             head = head->next;

@@ -34,6 +34,7 @@ def parse_intermediate_code():
 
         if len(ops) == 0:
             print('Ignoring unrecognizable statement', stmt)
+            continue
 
         # Detect array assignments like a[t3] = i
         array_operand_re = re.compile(r'(\w+)\[(\w+)]')

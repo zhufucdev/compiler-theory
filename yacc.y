@@ -281,7 +281,6 @@ declare_expression
             putTree(hashMap, $2);
             preType = type = 0;
 
-
             lastGlobalArray = addArray(lastGlobalArray, $2);
         }
     }
